@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,13 +17,18 @@ import com.test.brtest.Constants;
 import com.test.brtest.R;
 import com.test.brtest.model.Store;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class DetailActivity extends BaseActivity {
 
     private static final String GOOGLE_MAP_BASE_URL = "http://www.google.com/maps/place/";
+    private static final String GOOGLE_SEARCH_BASE_URL = "https://www.google.com/search?q=";
     private String storeName;
     private Store store;
     private TextView storePhone, storeAddressDetail;
     private CardView phoneCard,addressCard;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,21 @@ public class DetailActivity extends BaseActivity {
             finish();
             return;
         }
+
+        //FAB
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = null;
+                try {
+                    url = GOOGLE_SEARCH_BASE_URL+ URLEncoder.encode(store.getName(), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)));
+            }
+        });
 
         // Toolbar
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

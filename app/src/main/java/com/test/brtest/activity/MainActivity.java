@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onResponse(Call<Stores> call, Response<Stores> response) {
                 if(response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this,R.string.update_success,Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this,R.string.update_success,Toast.LENGTH_SHORT).show();
                     Stores stores = response.body();
                     storeList = stores.getStores();
                     fab.setVisibility(View.VISIBLE);
